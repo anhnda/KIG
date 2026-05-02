@@ -8,7 +8,7 @@ results to JSON files under a timestamped output directory.
 Usage:
     python run_benchmark.py
     python run_benchmark.py --models resnet50 vgg16 --n-test 10 --steps 30
-    python run_benchmark.py --outdir results/my_run --methods ig idgi guided_ig
+    python run_benchmark.py --outdir results/my_run --methods ig idgi guided_ig blurig
 """
 
 from __future__ import annotations
@@ -36,6 +36,7 @@ ALL_MODELS = [
 ]
 
 DEFAULT_METHODS = ["ig", "idgi", "guided_ig", "lig"]
+ALL_METHODS = ["ig", "idgi", "guided_ig", "blurig", "lig", "lig_idgi"]
 
 
 def run_benchmark(
@@ -145,8 +146,9 @@ def main():
     )
     parser.add_argument(
         "--methods", type=str, nargs="+", default=DEFAULT_METHODS,
-        choices=["ig", "idgi", "guided_ig", "lig", "lig_idgi"],
-        help="Attribution methods (default: ig idgi guided_ig lig)",
+        choices=ALL_METHODS,
+        help="Attribution methods (default: ig idgi guided_ig lig). "
+             "Add `blurig` to include Blur Integrated Gradients.",
     )
     parser.add_argument(
         "--metrics", type=str, nargs="+",
